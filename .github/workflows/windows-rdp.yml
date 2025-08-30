@@ -10,7 +10,9 @@ jobs:
     - name: Download Ngrok
       run: |
         Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
-        Expand-Archive ngrok.zip -DestinationPath ngrok
+        Expand-Archive ngrok.zip -DestinationPath .
+        New-Item -ItemType Directory -Force -Path ngrok
+        Move-Item -Path .\ngrok.exe -DestinationPath .\ngrok\ngrok.exe -Force
 
     - name: Authenticate Ngrok
       run: .\ngrok\ngrok.exe config add-authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
